@@ -28,6 +28,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "daniel-ferdiansyah-bfq.pbp.cs.ui.ac.id"]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500",  # Flutter Web origin
+    "http://localhost:5500", # Sometimes localhost is used
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 # Application definition
@@ -44,9 +51,11 @@ INSTALLED_APPS = [
     'blog',
     'categories',
     'discussion',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
