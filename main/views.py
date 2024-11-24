@@ -13,8 +13,10 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
-from django.http import JsonResponse
 from django.db.models import Q
+from django.http import JsonResponse
+from django.core.serializers import serialize
+from .models import Product
 
 
 def show_main(request):
@@ -122,6 +124,11 @@ def add_product_ajax(request):
     new_product.save()
 
     return HttpResponse(b"CREATED", status=201)
+
+def product_list(request):
+    products = Product.objects.all()
+    data = serialize('json', products)
+    return JsonResponse(data, safe=False)
 
 
 
